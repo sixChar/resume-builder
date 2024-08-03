@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Signup{% endblock %}
+
+{% block body %}
+<form class="signup-form" id="signup-form">
+    <div class="form-section">
+        <h2>Contact Info</h2>
+        <div class="label-input-pair">
+            <label for="name">Full Name:</label>
+            <input id="name" name="name" type="text" placeholder="John Doe" required>
+        </div>
+        
+        <div class="label-input-pair">
+            <label for="email">Email:</label>
+            <input id="email" name="email" type="email" placeholder="someone@example.com" required>
+        </div>
+        
+        <div class="label-input-pair">
+            <label for="address">Address:</label>
+            <input id="address" name="address" type="text" placeholder="123 Some Street" required>
+        </div>
+        <div class="label-input-pair">
+            <label for="addrCity">City:</label>
+            <input id="addrCity" name="addrCity" type="text" placeholder="Citiville" required>
+        </div>
+        <div class="label-input-pair">
+            <label for="addrProv">Province/State:</label>
+            <input id="addrProv" name="addrProv" type="text" placeholder="AA" required>
+        </div>
+        <div class="label-input-pair">
+            <label for="addrPostal">PostalCode:</label>
+            <input id="addrPostal" name="addrPostal" type="text" placeholder="A1A 1A1" required>
+        </div>
+        <div class="label-input-pair">
+            <label for="phone">Phone Number:</label>
+            <input id="phone" name="phone" type="text" placeholder="1 (204) 123-4567" required>
+        </div>
+    </div>
+    <div class="form-section">
+        <h2>Github</h2>
+        <div class="label-input-pair">
+            <label for="github">Github Profile:</label>
+            <input id="github" name="github" type="text" placeholder="github.com/johndoe" required>
+        </div>
+    </div>
+    <div class="form-section">
+        <h2>Education</h2>
+        <div class="label-input-pair">
+            <label for="degree">Degree:</label>
+            <input id="degree" name="degree" type="text" placeholder="Bsc. Science Majoring in Computer Science" required>
+        </div>
+        <div class="label-input-pair">
+            <label for="university">University:</label>
+            <input id="university" name="university" type="text" placeholder="University of Citiville" required>
+        </div>
+        <div class="label-input-pair">
+            <label for="uniLoc">University Location:</label>
+            <input id="uniLoc" name="uniLoc" type="text" placeholder="Citiville, AA, Countrystan" required>
+        </div>
+        <div class="label-input-pair">
+            <label for="gpa">GPA:</label>
+            <input id="gpa" name="gpa" type="text" placeholder="2.99" required>
+        </div>
+    </div>
+    <input type="submit">
+</form>
+
+<script src="{{ url_for('static', filename='scripts/signup.js') }}" defer></script>
+
+{% endblock %}

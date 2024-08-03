@@ -1,0 +1,25 @@
+html {
+    font-family: Arial, sans-serif;
+    background: lightblue;
+}
+
+
+.user-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 480px;
+    width: 90vw;
+    margin: auto;
+    gap: 20px;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.label-input-pair {
+    display: flex;
+    justify-content: space-between;
+}

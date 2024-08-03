@@ -1,0 +1,12 @@
+{% extends base %}
+
+{% block title %}User Projects{% endblock %}
+
+{% block body %}
+
+<ul>
+{% for project in projects %}
+    <li>{{ project.name }}</li>
+{% endfor %}
+</ul>
+{% endblock %}
