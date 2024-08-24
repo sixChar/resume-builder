@@ -1,12 +1,12 @@
-{% extends base %}
+{% extends 'base.html' %}
 
 {% block title %}User Projects{% endblock %}
 
 {% block body %}
 
-<ul>
-{% for project in projects %}
-    <li>{{ project.name }}</li>
-{% endfor %}
+<ul id="projectList">
 </ul>
+<button id="addProjectButton">Add Project</button>
+<button id="saveProjectsButton">Save Projects</button>
+<script src="{{ url_for('static', filename='scripts/projects.js') }}"></script>
 {% endblock %}

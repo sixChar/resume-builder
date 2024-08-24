@@ -6,41 +6,66 @@
 
     <!-- Header -->
     <div id="header">
-        <h1>Colm Evans</h1>
+        <h1>{{ name }}</h1>
         <div>
-            <p>14 Coral Crescent</p>
-            <p>Winnipeg, MB  R2J 1V7</p>
-            <p>evansgcolm@gmail.com</p>
-            <p>(204) 232-5614</p>
+            <p>{{ streetAddr }}</p>
+            <p>{{ city }}, {{ province }}  {{ postal }}</p>
+            <p>{{ email }}</p>
+            <p>{{ phone }}</p>
         </div>
     </div>
 
     <!-- Github -->
     <div>
         <h2>Github</h2>
-        <a href="https://github.com/sixChar" target="_blank" rel="noopener noreferrer">github.com/sixChar</a>
+        <a href="{{ github }}" target="_blank" rel="noopener noreferrer">{{ github }}</a>
     </div>
+
+    
+    {% if experience is not none %}
+    <!-- Experience -->
+    <div>
+        <h2>Experience</h2>
+        <ul>
+            {% for expr in experience %}
+            <li>
+                <h3>{{ expr["position"] }}</h3>
+                <p>{{ expr["employer"] }}, 
+                    {% if expr["endDate"] is not none %}{{ expr["startDate"] }} to {{ expr["endDate"] }}
+                    {% else %} Current position, Started {{ expr["startDate"] }}
+                    {% endif %}
+                </p>
+                <p>{{ expr["description"] }}</p>
+
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
 
     <!-- Education -->
     <div>
         <h2>Education</h2>
-        <p>B.Sc. Computer Science Major, GPA: 3.26</p>
-        <p>University of Manitoba, Winnipeg, MB</p>
+        <p>{{ degree }}, GPA: {{ gpa }}</p>
+        <p>{{ uniLoc }}</p>
     </div>
 
     <!-- Projects -->
     <div>
         <h2>Projects</h2>
         <ul>
-            <div>
-                <p>Project 1</p>
-            </div>
-            <div>
-                <p>Project 2</p>
-            </div>
-            <div>
-                <p>Project 3</p>
-            </div>
+            {% for project in projects %}
+                <li>
+                    <h3>{{ project['title'] }}</h3>
+                    <p>"{{ project['desc'] }}"</p>
+                    <a href="{{ project['link'] }}">{{ project['link'] }}</a>
+                    <ul>
+                        {% for skill in project['skills'] %}
+                            <li>{{ skill }}</li>    
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
         </ul>
     </div>
 

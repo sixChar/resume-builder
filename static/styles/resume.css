@@ -3,6 +3,10 @@ html {
     background: lightblue;
 }
 
+h3 {
+    color: red;
+}
+
 
 .user-form {
     display: flex;

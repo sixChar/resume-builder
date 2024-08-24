@@ -18,35 +18,39 @@ CREATE TABLE IF NOT EXISTS users (
 
 
 CREATE TABLE IF NOT EXISTS projects (
-    projId INTEGER PRIMARY KEY AUTOINCREMENT,
     userId INTEGER NOT NULL,
-    title TEXT NOT NULL,
-    description TEXT NOT NULL,
-    projLink TEXT NOT NULL,
+    title TEXT NOT NULL UNIQUE,
+    description TEXT,
+    projLink TEXT,
+    PRIMARY KEY (userId, title),
     FOREIGN KEY(userId) REFERENCES users(userId) 
 );
 
 
-CREATE TABLE IF NOT EXISTS skills (
-    skillId INTEGER PRIMARY KEY AUTOINCREMENT,
-    skillName TEXT NOT NULL
-);
-
-
-
-CREATE TABLE IF NOT EXISTS userSkills (
-    userId INTEGER NOT NULL,
-    skillId INTEGER NOT NULL,
-    PRIMARY KEY (userId, skillId),
-    FOREIGN KEY(userId) REFERENCES users(userId),
-    FOREIGN KEY(skillId) REFERENCES skills(skillId)
-);
-
-
+/*
+    "Proper" db design would have the skills in their own table and linked with their IDs to avoid 
+    dublicating text. However, I don't expect that to save more than a dozen bytes on avg for < 10 skills
+    per project, < 20 projects per user, with me being the only user but even with 10000 users we have:
+        12 * 10 * 20 * 10000 = 24 MiB extra overhead. In exchange it's simpler to access and the app will
+    need to make fewer queries with fewer joins.
+*/
 CREATE TABLE IF NOT EXISTS projSkills (
-    projId INTEGER NOT NULL,
-    skillId INTEGER NOT NULL,
-    PRIMARY KEY (projId, skillId),
-    FOREIGN KEY(skillId) REFERENCES skills(skillId),
-    FOREIGN KEY(projId) REFERENCES projects(projId)
+    userId INTEGER NOT NULL,
+    projTitle INTEGER NOT NULL,
+    skill TEXT NOT NULL,
+    PRIMARY KEY (userId, projTitle, skill) ON CONFLICT IGNORE,
+    FOREIGN KEY(projTitle, userId) REFERENCES projects(userId, title)
+);
+
+
+CREATE TABLE IF NOT EXISTS experience (
+    userId INTEGER NOT NULL,
+    position TEXT NOT NULL,
+    employer TEXT NOT NULL,
+    description TEXT NOT NULL,
+    startDate DATE NOT NULL,
+    endDate DATE,
+    PRIMARY KEY (userId, position, employer, startDate) ON CONFLICT REPLACE,
+    FOREIGN KEY(userId) REFERENCES users(userId)
+
 );

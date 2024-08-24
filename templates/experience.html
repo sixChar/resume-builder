@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}User Experience{% endblock %}
+
+{% block body %}
+
+<ul id="experienceList">
+</ul>
+<button id="addExperienceButton">Add Position</button>
+<button id="saveExperienceButton">Save Experience</button>
+<script src="{{ url_for('static', filename='scripts/experience.js') }}"></script>
+{% endblock %}
