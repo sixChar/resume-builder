@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Resume Builder{% endblock %}
+
+{% block body %}
+<div class="builder-container">
+    <div class="sidebar">
+        <h2>Select and Order Projects</h2>
+        <ul id="projectSidebarList">
+            <!-- Project checkboxes and drag handles will be dynamically populated here -->
+        </ul>
+        <button id="downloadResumeButton">Download PDF</button> <!-- New download button -->
+    </div>
+
+    <div class="resume-preview">
+        <div id="resumePreviewContainer">
+            <!-- The resume preview will be rendered here -->
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='scripts/builder.js') }}"></script>
+{% endblock %}
+
+

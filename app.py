@@ -73,7 +73,7 @@ def token_required(f):
 
 def query_user_profile(db, userId):
     query = """
-        SELECT email, name, streetAddress, city, province, postal, phone, github, degree, university, uniLoc, gpa FROM users WHERE userId=(?)
+        SELECT email, name, streetAddress, city, province, postal, phone, github, degree, university, uniLoc, gpa, proficientSkills, familiarSkills FROM users WHERE userId=(?)
     """
 
     curr = db.execute(query, [userId])
@@ -174,7 +174,7 @@ def profile(userId):
     rv = query_user_profile(db, userId)
 
     rv = ("" if col is None else col for col in rv)
-    email, name, streetAddr, city, province, postal, phone, github, degree, university, uniLoc, gpa = rv
+    email, name, streetAddr, city, province, postal, phone, github, degree, university, uniLoc, gpa, proficientSkills, familiarSkills = rv
 
 
     return render_template(
@@ -190,7 +190,9 @@ def profile(userId):
         degree=degree,
         university=university,
         uniLoc=uniLoc,
-        gpa=gpa
+        gpa=gpa,
+        proficient=proficientSkills,
+        familiar=familiarSkills
     )
 
 
@@ -209,6 +211,8 @@ def api_update_profile(userId):
     university = request.form["university"]
     uniLoc = request.form["uniLoc"]
     gpa = request.form["gpa"]
+    proficientSkills = request.form["proficient"]
+    familiarSkills = request.form["familiar"]
 
     query = """
         UPDATE users SET
@@ -223,12 +227,14 @@ def api_update_profile(userId):
             degree=?,
             university=?,
             uniLoc=?,
-            gpa=?
+            gpa=?,
+            proficientSkills=?,
+            familiarSkills=?
         WHERE userId=?
     """
 
     db = get_db()
-    curr = db.execute(query, [email, name, streetAddr, city, province, postal, phone, github, degree, university, uniLoc, gpa, userId])
+    curr = db.execute(query, [email, name, streetAddr, city, province, postal, phone, github, degree, university, uniLoc, gpa, proficientSkills, familiarSkills, userId])
 
     rv = curr.fetchall()
     db.commit();
@@ -252,17 +258,32 @@ def api_set_experience(userId):
 
     values = [(userId, e['position'], e['employer'], e['description'], e['startDate'], e['endDate']) for e in experience]
 
+    exp_keys = []
+    for _, pos, emp, _, start, _ in values:
+        exp_keys.append(pos)
+        exp_keys.append(emp)
+        exp_keys.append(start)
+
     insert_exp_query = """
         INSERT INTO experience (userId, position, employer, description, startDate, endDate)
         VALUES (?, ?, ?, ?, ?, ?)
     """
 
+    delete_exp_query = """
+        DELETE FROM experience
+        WHERE userId = ?
+        AND (position, employer, startDate) NOT IN ({})
+    """.format(', '.join("(?, ?, ?)" for _ in values))
+
     db = get_db()
     
     curr = db.executemany(insert_exp_query, values) 
+
+    curr = db.execute(delete_exp_query, [userId] + exp_keys)
+
     db.commit()
 
-    # TODO Delete removed experience
+
 
     return experience
 
@@ -405,7 +426,7 @@ def api_login():
 @token_required
 def show_resume(userId):
     db = get_db()
-    (email, name, streetAddr, city, province, postal, phone, github, degree, university, uniLoc, gpa) = query_user_profile(db, userId)
+    (email, name, streetAddr, city, province, postal, phone, github, degree, university, uniLoc, gpa, proficientSkills, familiarSkills) = query_user_profile(db, userId)
 
     projects = query_user_projects(db, userId)
 
@@ -425,16 +446,18 @@ def show_resume(userId):
         uniLoc=uniLoc,
         gpa=gpa,
         projects=projects,
-        experience=experience
+        experience=experience,
+        proficientSkills=proficientSkills.splitlines(),
+        familiarSkills=familiarSkills.splitlines(),
     )
 
     pdf_options = {
         'enable-local-file-access':"",
-        'page-size': 'A4',
-        'margin-top': '0.75in',
-        'margin-right': '0.75in',
-        'margin-bottom': '0.75in',
-        'margin-left': '0.75in',
+        'page-size': "A4",
+        'margin-top': '0mm',
+        'margin-right': '0mm',
+        'margin-bottom': '0mm',
+        'margin-left': '0mm',
         'encoding': "UTF-8",
     }
 
@@ -442,6 +465,99 @@ def show_resume(userId):
 
     pdf = pdfkit.from_string(html, os.path.abspath("test.pdf"), css=css, options=pdf_options)
     return make_response(html)
+
+
+@app.route("/builder")
+@token_required
+def builder(userId):
+    return render_template("builder.html")
+
+@app.route("/api/filtered-resume", methods=["POST"])
+@token_required
+def filtered_resume(userId):
+    selected_projects = request.json.get('selected_projects', [])
+    db = get_db()
+    (email, name, streetAddr, city, province, postal, phone, github, degree, university, uniLoc, gpa, proficientSkills, familiarSkills) = query_user_profile(db, userId)
+
+    all_projects = {proj['title']: proj for proj in query_user_projects(db, userId)}
+
+    ordered_projects = [all_projects[title] for title in selected_projects if title in all_projects]
+
+    experience = query_user_experience(db, userId)
+
+    html = render_template("resume.html", 
+        email=email,
+        name=name,
+        streetAddr=streetAddr,
+        city=city,
+        province=province,
+        postal=postal,
+        phone=phone,
+        github=github,
+        degree=degree,
+        university=university,
+        uniLoc=uniLoc,
+        gpa=gpa,
+        projects=ordered_projects,
+        experience=experience,
+        proficientSkills=proficientSkills.splitlines(),
+        familiarSkills=familiarSkills.splitlines(),
+    )
+    return jsonify({"resume_html": html})
+
+
+@app.route("/download-resume", methods=["POST"])
+@token_required
+def download_resume(userId):
+    selected_projects = request.json.get('selected_projects', [])
+    db = get_db()
+
+    # Get all projects in a dictionary for fast lookup
+    all_projects = {proj['title']: proj for proj in query_user_projects(db, userId)}
+    ordered_projects = [all_projects[title] for title in selected_projects if title in all_projects]
+
+    experience = query_user_experience(db, userId)
+    profile_data = query_user_profile(db, userId)
+    (email, name, streetAddr, city, province, postal, phone, github, degree, university, uniLoc, gpa, proficientSkills, familiarSkills) = profile_data
+
+    html = render_template("resume.html", 
+        email=email,
+        name=name,
+        streetAddr=streetAddr,
+        city=city,
+        province=province,
+        postal=postal,
+        phone=phone,
+        github=github,
+        degree=degree,
+        university=university,
+        uniLoc=uniLoc,
+        gpa=gpa,
+        projects=ordered_projects,  # Use ordered projects
+        experience=experience,
+        proficientSkills=proficientSkills.splitlines(),
+        familiarSkills=familiarSkills.splitlines(),
+    )
+
+    pdf_options = {
+        'enable-local-file-access': "",
+        'page-size': "A4",
+        'margin-top': '0mm',
+        'margin-right': '0mm',
+        'margin-bottom': '0mm',
+        'margin-left': '0mm',
+        'encoding': "UTF-8",
+    }
+
+    css = "static/styles/resume.css"
+
+    # Generate PDF
+    pdf = pdfkit.from_string(html, False, css=css, options=pdf_options)
+
+    response = make_response(pdf)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'attachment; filename=resume.pdf'
+    return response
 
     
 

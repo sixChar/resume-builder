@@ -2,83 +2,107 @@
 
 {% block title %}Resume{% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/resume.css') }}">
+{% endblock %}
+
 {% block body %}
 
+<div class="pdf-container">
+    <div class="content">
     <!-- Header -->
-    <div id="header">
-        <h1>{{ name }}</h1>
-        <div>
-            <p>{{ streetAddr }}</p>
-            <p>{{ city }}, {{ province }}  {{ postal }}</p>
-            <p>{{ email }}</p>
-            <p>{{ phone }}</p>
+        <div id="header" class="resume-header">
+            <div class="resume-contact">
+                <p>{{ streetAddr }}</p>
+                <p>{{ city }}, {{ province }}  {{ postal }}</p>
+                <p>{{ email }}</p>
+                <p>{{ phone }}</p>
+            </div>
+            <h1 class="resume-name">{{ name }}</h1>
         </div>
-    </div>
 
-    <!-- Github -->
-    <div>
-        <h2>Github</h2>
-        <a href="{{ github }}" target="_blank" rel="noopener noreferrer">{{ github }}</a>
-    </div>
+        <!-- Github -->
+        <div class="section">
+            <h2 class="section-title">Github</h2>
+            <a class="resume-github" href="{{ github }}" target="_blank" rel="noopener noreferrer">{{ github }}</a>
+        </div>
 
-    
-    {% if experience is not none %}
-    <!-- Experience -->
-    <div>
-        <h2>Experience</h2>
-        <ul>
-            {% for expr in experience %}
-            <li>
-                <h3>{{ expr["position"] }}</h3>
-                <p>{{ expr["employer"] }}, 
-                    {% if expr["endDate"] is not none %}{{ expr["startDate"] }} to {{ expr["endDate"] }}
-                    {% else %} Current position, Started {{ expr["startDate"] }}
-                    {% endif %}
-                </p>
-                <p>{{ expr["description"] }}</p>
-
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
-
-    <!-- Education -->
-    <div>
-        <h2>Education</h2>
-        <p>{{ degree }}, GPA: {{ gpa }}</p>
-        <p>{{ uniLoc }}</p>
-    </div>
-
-    <!-- Projects -->
-    <div>
-        <h2>Projects</h2>
-        <ul>
-            {% for project in projects %}
+        
+        {% if experience is not none %}
+        <!-- Experience -->
+        <div class="section">
+            <h2 class="section-title">Experience</h2>
+            <ul class="resume-list">
+                {% for expr in experience %}
                 <li>
-                    <h3>{{ project['title'] }}</h3>
-                    <p>"{{ project['desc'] }}"</p>
-                    <a href="{{ project['link'] }}">{{ project['link'] }}</a>
-                    <ul>
-                        {% for skill in project['skills'] %}
-                            <li>{{ skill }}</li>    
-                        {% endfor %}
-                    </ul>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+                    <h3 class="list-title">{{ expr["position"] }}</h3>
+                    <p class="employer-date">{{ expr["employer"] }}, 
+                        {% if expr["endDate"] != "" %}{{ expr["startDate"] }} to {{ expr["endDate"] }}
+                        {% else %} Current position, Started {{ expr["startDate"] }}
+                        {% endif %}
+                    </p>
+                    <p class="list-text">{{ expr["description"] }}</p>
 
-    <!-- Skills -->
-    <div>
-        <h2>Skills</h2>
-        <div>
-            Profficient:
+                </li>
+                {% endfor %}
+            </ul>
         </div>
-        <div>
-            Familiar:
+        {% endif %}
+
+        <!-- Education -->
+        <div class="section">
+            <h2 class="section-title">Education</h2>
+            <p class="education-degree">{{ degree }}, GPA: {{ gpa }}</p>
+            <p class="education-location">{{university}}, {{ uniLoc }}</p>
+        </div>
+
+        <!-- Projects -->
+        <div class="section">
+            <h2 class="section-title">Projects</h2>
+            <ul class="resume-list">
+                {% for project in projects %}
+                    <li>
+                        <h3 class="list-title">{{ project['title'] }}</h3>
+                        <p class="list-text">"{{ project['desc'] }}"</p>
+                        <p class="list-text">Link: <a class="resume-link" href="{{ project['link'] }}">{{ project['link'] }}</a></p>
+                        <p class="list-text">Skills demonstrated:</p>
+                        <ul class="project-skill-list">
+                            {% for skill in project['skills'] %}
+                                <li class="project-skill">{{ skill }}</li>    
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Skills -->
+        <div class="section">
+            <h2 class="section-title">Skills</h2>
+            <div>
+                <p class="skills-title">
+                    Proficient:
+                </p>
+                <ul class="skills-list">
+                {% for skill in proficientSkills %}
+                    <li class="skill">{{ skill }}</li>
+                {% endfor %}
+                </ul>
+                
+            </div>
+            <div>
+                <p class="skills-title">
+                    Familiar:
+                </p>
+                <ul class="skills-list">
+                {% for skill in familiarSkills %}
+                    <li class="skill">{{ skill }}</li>
+                {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
+</div>
     
 {% endblock %}
 

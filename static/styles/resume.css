@@ -1,12 +1,140 @@
 html {
     font-family: Arial, sans-serif;
-    background: lightblue;
+    margin: 0;
+    padding: 0;
 }
 
-h3 {
-    color: red;
+
+body {
+    width: 98vw;
+    height: 98vh;
+    margin: 0;
+    padding: 0;
+    color: #404040;
 }
 
+@page {
+    size: A4;
+    margin: 0;
+}
+
+.pdf-container {
+    margin: 0;
+    padding: 20px;
+    width: 270mm; /* NOTE Not correct A4 size but for some reason the correct size is too small. */
+    height: 386mm;
+    font-size: 14px;
+}
+
+.content {
+    padding-left: 3em;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+.resume-header {
+    padding-top: 2em;
+    border-bottom: 5px black solid;
+}
+
+.resume-name {
+    font-size: 4em;
+    line-height: 0.5em;
+    color: black;
+}
+
+.resume-contact {
+    margin-top: 0em;
+    line-height: 0.3em;
+    font-style: italic;
+    color: #404040;
+}
+
+.section-title {
+    color: black;
+    font-size: 2em;
+    line-height: 0em;
+}
+
+.section {
+    margin-top: 4em;
+}
+
+.education-degree {
+    font-weight: bold;
+    margin-left: 2em;
+}
+
+.education-location {
+    font-style: italic;
+    margin-left: 2em;
+}
+
+
+.resume-list {
+    list-style-type: none;
+}
+
+.list-title {
+    margin-top: 2em;
+    font-size: 1.5em;
+    line-height: 0.3em;
+}
+
+.list-text {
+    margin-left: 2em;
+}
+
+.employer-date {
+    margin-top: -1em;
+    margin-bottom: -0.1em;
+    font-style: italic;
+    
+}
+
+.resume-link {
+    margin-left: 1.5em;
+    text-decoration: none;
+    color: inherit;
+    font-style: italic;
+}
+
+.resume-github {
+    margin-left: 2em;
+    text-decoration: none;
+    color: inherit;
+    font-style: italic;
+    font-size: 1.2em;
+    
+}
+
+.project-skill-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style-type: square;
+    
+}
+
+.project-skill {
+    margin-left: 3.5em;
+}
+
+.skills-title {
+    font-size: 1.5em;
+    margin-left: 2em;
+}
+
+.skills-list {
+    margin-left: 3em;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.skill {
+    margin-left: 3.5em;
+}
 
 .user-form {
     display: flex;
@@ -27,3 +155,23 @@ h3 {
     display: flex;
     justify-content: space-between;
 }
+
+
+.builder-container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 25%;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-right: 1px solid #ddd;
+}
+
+.resume-preview {
+    width: 75%;
+    padding: 20px;
+    overflow-y: auto;
+}
+

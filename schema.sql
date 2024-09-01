@@ -13,7 +13,9 @@ CREATE TABLE IF NOT EXISTS users (
     degree TEXT,
     university TEXT,
     uniLoc TEXT,
-    gpa TEXT
+    gpa TEXT,
+    proficientSkills TEXT,
+    familiarSkills TEXT
 );
 
 
