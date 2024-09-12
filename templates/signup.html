@@ -6,9 +6,13 @@
 {% endblock %}
 
 {% block body %}
-<div class="user-form-container">
+<div class="user-form-container" style="margin-top:25vh;">
     <form id="signup-form" class="user-form">
         <div class="form-section">
+
+            <h1 class="section-title" style="text-align: center;">Signup</h1>            
+            <a href="{{ url_for('login') }}" style="text-align: center;">Or login if you already have an account.</a>
+
             <label for="email">Email:</label>
             <input class="form-text" id="email" name="email" type="email" placeholder="someone@example.com" required>
     

@@ -5,7 +5,7 @@ import jwt
 import datetime
 
 import click
-from flask import Flask, render_template, current_app, g, request, make_response, jsonify
+from flask import Flask, render_template, current_app, g, request, make_response, jsonify, redirect, url_for
 from functools import wraps
 
 import pdfkit
@@ -73,7 +73,7 @@ def token_required(f):
             
         except Exception as e:
             print(e)
-            return jsonify({'message': 'token invalid'}), 401
+            return redirect(url_for("login"))
         return f(data['user_id'], *args, **kwargs)
     return decorated
 
@@ -417,7 +417,7 @@ def api_signup():
             rv = curr.fetchone()
             curr.close()
             token = make_user_token(curr.lastrowid)
-            resp = make_response(jsonify({"message": "success"}), 200)
+            resp = make_response({"redirect": url_for("profile")})
             resp.set_cookie('token', token, httponly=True)
             db.commit()
             return resp
@@ -452,7 +452,7 @@ def api_login():
 
     if passwordValid:
         token = make_user_token(userId)
-        resp = make_response(jsonify({"message": "success"}), 200)
+        resp = make_response({"redirect": url_for("profile")})
         resp.set_cookie('token', token, httponly=True)
         return resp
     else:
