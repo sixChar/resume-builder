@@ -2,11 +2,17 @@
 
 {% block title %}User Experience{% endblock %}
 
+{% block head %}
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles/experience.css') }}"> -->
+{% endblock %}
+
 {% block body %}
 
-<ul id="experienceList">
-</ul>
-<button id="addExperienceButton">Add Position</button>
-<button id="saveExperienceButton">Save Experience</button>
+<div class="user-form-container">
+    <ul id="experienceList" class="user-form">
+    </ul>
+    <button id="addExperienceButton" class="button color-add">Add Position</button>
+    <button id="saveExperienceButton" class="button color-save">Save Experience</button>
+</div>
 <script src="{{ url_for('static', filename='scripts/experience.js') }}"></script>
 {% endblock %}

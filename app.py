@@ -63,6 +63,14 @@ def token_required(f):
             return jsonify({'message': 'token missing'}), 401
         try:
             data = read_user_token(token)
+            userId = data['user_id']
+            db = get_db()
+            curr = db.execute("SELECT userId FROM users WHERE userId=?", [userId])
+            user = curr.fetchone()
+
+            if not user:
+                return jsonify({'message': 'user does not exist!'}), 401
+            
         except Exception as e:
             print(e)
             return jsonify({'message': 'token invalid'}), 401
@@ -237,7 +245,36 @@ def api_update_profile(userId):
     curr = db.execute(query, [email, name, streetAddr, city, province, postal, phone, github, degree, university, uniLoc, gpa, proficientSkills, familiarSkills, userId])
 
     rv = curr.fetchall()
-    db.commit();
+    db.commit()
+
+    return {"message": "success"}, 200
+
+
+@app.route("/api/delete-profile", methods=["POST"])
+@token_required
+def api_delete_profile(userId):
+    delete_experience = """
+        DELETE FROM experience WHERE userId=?
+    """
+
+    delete_skills = """
+        DELETE FROM projSkills WHERE userId=?
+    """
+
+    delete_projects = """
+        DELETE FROM projects WHERE userId=?
+    """
+
+    delete_user = """
+        DELETE FROM users WHERE userId=?
+    """
+
+    db = get_db()
+    curr = db.execute(delete_experience, [userId])
+    curr = db.execute(delete_skills, [userId])
+    curr = db.execute(delete_projects, [userId])
+    curr = db.execute(delete_user, [userId])
+    db.commit()
 
     return {"message": "success"}, 200
 

@@ -3,12 +3,24 @@
 <head>
     <title>{% block title %}{% endblock %}</title>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/base.css') }}">
     {% block head %}{% endblock %}
 </head>
-
 <body>
+
+    <nav class="navbar">
+        <ul class="nav-list">
+            <li><a href="{{ url_for('builder') }}">Builder</a></li>
+            <li><a href="{{ url_for('projects') }}">Projects</a></li>
+            <li><a href="{{ url_for('experience') }}">Experience</a></li>
+            <li><a href="{{ url_for('profile') }}">Profile</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+        </ul>
+    </nav>
+
+
     {% block body %}{% endblock %}
 </body>
-
-
 </html>
+

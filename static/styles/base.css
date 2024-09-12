@@ -1,0 +1,159 @@
+/* base.css */
+
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Typography */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Common button styles */
+.button {
+    margin: 10px 0;
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Color classes */
+.color-add {
+    background-color: #007BFF; /* Blue */
+}
+
+.color-add:hover {
+    background-color: #0056b3; /* Darker blue */
+}
+
+.color-save {
+    background-color: #28a745; /* Green */
+}
+
+.color-save:hover {
+    background-color: #218838; /* Darker green */
+}
+
+.color-delete {
+    background-color: #f44336; /* Red */
+}
+
+.color-delete:hover {
+    background-color: #d32f2f; /* Darker red */
+}
+
+
+/* Header styles */
+h1, h2, h3, h4, h5, h6 {
+    margin: 10px 0;
+    color: #404040;
+}
+
+/* Form styles */
+
+.user-form-container {
+    max-width: 600px; /* Adjust the max-width as needed */
+    min-width: 15em;
+    margin: auto; /* Center the content */
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.user-form {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 80%;    
+}
+
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 2em;
+}
+
+.form-section label {
+  width: 12em;
+  font-weight: bold;
+}
+
+.form-text {
+  flex: 1;
+  padding: 0.5em;
+  margin-bottom: 0.9em;
+}
+
+.form-textarea {
+    flex: 1;
+    padding: 0.5em;
+    margin-bottom: 0.9em;
+    resize: none;
+}
+
+
+.form-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2em;
+}
+
+.form-list-item {
+    display: flex;
+    width: 100%;
+    gap: 1em;
+}
+
+
+.form-list-item input {
+  min-width: 5em;
+  flex: 1;
+  margin: auto; 
+}
+
+
+
+.label-input-pair {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #404040;
+    gap: 0.5em;
+}
+
+.label-input-pair label {
+    min-width: 12em;
+    font-weight: bold;
+}
+
+.label-input-pair input {
+    flex: 1;
+    padding: 0.5em;
+    margin-bottom: 0.9em;
+}
+
+.label-input-pair textarea {
+    flex: 1;
+    padding: 0.5em;
+    margin-bottom: 0.9em;
+    resize: none;
+}
+
+

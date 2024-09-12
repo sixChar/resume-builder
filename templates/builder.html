@@ -2,6 +2,10 @@
 
 {% block title %}Resume Builder{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/builder.css') }}">
+{% endblock %}
+
 {% block body %}
 <div class="builder-container">
     <div class="sidebar">

@@ -2,82 +2,61 @@
 
 {% block title %}Profile{% endblock %}
 
+{% block head %}
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles/profile.css') }}"> -->
+{% endblock %}
+
 {% block body %}
-<form class="profile-form" id="profile-form">
-    <div class="form-section">
-        <h2>Contact Info</h2>
-        <div class="label-input-pair">
-            <label for="name">Full Name:</label>
-            <input id="name" name="name" type="text" placeholder="Full Name" value="{{name}}">
+<div class="user-form-container">
+    <form class="user-form" id="profile-form">
+        <div class="form-section">
+            <h2 class="section-title">Contact Info</h2>
+                <label for="name">Full Name:</label>
+                <input class="form-text" class="form-text" id="name" name="name" type="text" placeholder="Full Name" value="{{name}}">
+            
+                <label for="email">Email:</label>
+                <input class="form-text" id="email" name="email" type="email" placeholder="someone@example.com" value="{{email}}" required>
+            
+                <label for="address">Address:</label>
+                <input class="form-text" id="streetAddr" name="streetAddr" type="text" placeholder="123 Some Street" value="{{streetAddr}}">
+                <label for="addrCity">City:</label>
+                <input class="form-text" id="city" name="city" type="text" placeholder="City" value="{{city}}">
+                <label for="addrProv">Province/State:</label>
+                <input class="form-text" id="province" name="province" type="text" placeholder="Province" value="{{province}}">
+                <label for="addrPostal">PostalCode:</label>
+                <input class="form-text" id="postal" name="postal" type="text" placeholder="A1A 1A1" value="{{postal}}">
+                <label for="phone">Phone Number:</label>
+                <input class="form-text" id="phone" name="phone" type="text" placeholder="1 (204) 123-4567" value="{{phone}}">
         </div>
-        
-        <div class="label-input-pair">
-            <label for="email">Email:</label>
-            <input id="email" name="email" type="email" placeholder="someone@example.com" value="{{email}}" required>
+        <div class="form-section">
+            <h2 class="section-title">Github</h2>
+                <label for="github">Github Profile:</label>
+                <input class="form-text" id="github" name="github" type="text" placeholder="github.com/johndoe" value="{{github}}">
         </div>
-        
-        <div class="label-input-pair">
-            <label for="address">Address:</label>
-            <input id="streetAddr" name="streetAddr" type="text" placeholder="123 Some Street" value="{{streetAddr}}">
+        <div class="form-section">
+            <h2 class="section-title">Education</h2>
+                <label for="degree">Degree:</label>
+                <input class="form-text" id="degree" name="degree" type="text" placeholder="Bsc. Science Majoring in Computer Science" value="{{degree}}">
+                <label for="university">University:</label>
+                <input class="form-text" id="university" name="university" type="text" placeholder="University of Citiville" value="{{university}}">
+                <label for="uniLoc">University Location:</label>
+                <input class="form-text" id="uniLoc" name="uniLoc" type="text" placeholder="Citiville, AA, Countrystan" value="{{uniLoc}}">
+                <label for="gpa">GPA:</label>
+                <input class="form-text" id="gpa" name="gpa" type="text" placeholder="2.99" value="{{gpa}}">
         </div>
-        <div class="label-input-pair">
-            <label for="addrCity">City:</label>
-            <input id="city" name="city" type="text" placeholder="City" value="{{city}}">
+    
+        <div class="form-section">
+            <h2 class="section-title">Skills</h2>
+                <label for="proficient">Proficient:</label>
+                <textarea class="form-textarea" id="proficient" name="proficient" type="text" placeholder="" rows="12">{{proficient}}</textarea>
+                <label for="familiar">Familiar:</label>
+                <textarea class="form-textarea" id="familiar" name="familiar" type="text" placeholder="" rows="12">{{familiar}}</textarea>
         </div>
-        <div class="label-input-pair">
-            <label for="addrProv">Province/State:</label>
-            <input id="province" name="province" type="text" placeholder="Province" value="{{province}}">
-        </div>
-        <div class="label-input-pair">
-            <label for="addrPostal">PostalCode:</label>
-            <input id="postal" name="postal" type="text" placeholder="A1A 1A1" value="{{postal}}">
-        </div>
-        <div class="label-input-pair">
-            <label for="phone">Phone Number:</label>
-            <input id="phone" name="phone" type="text" placeholder="1 (204) 123-4567" value="{{phone}}">
-        </div>
-    </div>
-    <div class="form-section">
-        <h2>Github</h2>
-        <div class="label-input-pair">
-            <label for="github">Github Profile:</label>
-            <input id="github" name="github" type="text" placeholder="github.com/johndoe" value="{{github}}">
-        </div>
-    </div>
-    <div class="form-section">
-        <h2>Education</h2>
-        <div class="label-input-pair">
-            <label for="degree">Degree:</label>
-            <input id="degree" name="degree" type="text" placeholder="Bsc. Science Majoring in Computer Science" value="{{degree}}">
-        </div>
-        <div class="label-input-pair">
-            <label for="university">University:</label>
-            <input id="university" name="university" type="text" placeholder="University of Citiville" value="{{university}}">
-        </div>
-        <div class="label-input-pair">
-            <label for="uniLoc">University Location:</label>
-            <input id="uniLoc" name="uniLoc" type="text" placeholder="Citiville, AA, Countrystan" value="{{uniLoc}}">
-        </div>
-        <div class="label-input-pair">
-            <label for="gpa">GPA:</label>
-            <input id="gpa" name="gpa" type="text" placeholder="2.99" value="{{gpa}}">
-        </div>
-    </div>
-
-    <div class="form-section">
-        <h2>Skills</h2>
-        <div class="label-input-pair">
-            <label for="proficient">Proficient:</label>
-            <textarea id="proficient" name="proficient" type="text" placeholder="">{{proficient}}</textarea>
-        </div>
-        <div class="label-input-pair">
-            <label for="familiar">Familiar:</label>
-            <textarea id="familiar" name="familiar" type="text" placeholder="">{{familiar}}</textarea>
-        </div>
-    </div>
-
-    <input type="submit" value="Save Changes">
-</form>
+    
+    </form>
+    <input class="button color-save" type="submit" value="Save Changes">
+    <button id="delete-profile-btn" class="button color-delete">Delete Profile</button>
+</div>
 
 <script src="{{ url_for('static', filename='scripts/profile.js') }}" defer></script>
 

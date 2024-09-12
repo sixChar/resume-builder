@@ -2,23 +2,24 @@
 
 {% block title %}Signup{% endblock %}
 
+{% block head %}
+{% endblock %}
+
 {% block body %}
-<form id="signup-form" class="user-form">
-    <div class="form-section">
-        <div class="label-input-pair">
+<div class="user-form-container">
+    <form id="signup-form" class="user-form">
+        <div class="form-section">
             <label for="email">Email:</label>
-            <input id="email" name="email" type="email" placeholder="someone@example.com" required>
-        </div>
-        <div class="label-input-pair">
+            <input class="form-text" id="email" name="email" type="email" placeholder="someone@example.com" required>
+    
             <label for="password">Password:</label>
-            <input id="password" name="password" type="password" placeholder="*********" required>
-        </div>
-        <div class="label-input-pair">
+            <input class="form-text" id="password" name="password" type="password" placeholder="*********" required>
+    
             <label for="passConf">Confirm Password:</label>
-            <input id="passConf" name="passConf" type="password" placeholder="*********" required>
+            <input class="form-text" id="passConf" name="passConf" type="password" placeholder="*********" required>
         </div>
-    </div>
-    <input type="submit" value="Sign Up">
-</form>
+        <input class="button color-save" type="submit" value="Sign Up">
+    </form>
+</div>
 <script src="{{ url_for('static', filename='scripts/signup.js') }}" defer></script>
 {% endblock %}

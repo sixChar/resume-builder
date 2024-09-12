@@ -1,7 +1,16 @@
 
-function createExperienceTextElement(entry, elemName, experience) {
+
+let elementIdCounter = 0;
+function createExperienceTextElement(entry, elemName, experience, labelText) {
+    const uniqueId = `${elemName}-${elementIdCounter}`;
+
+    const label = document.createElement('label');
+    label.setAttribute('for', uniqueId);
+    label.innerText = labelText;
+    entry.appendChild(label);
+
     const textElem = document.createElement('input');
-    textElem.className = "experience-text";
+    textElem.className = "form-text";
     textElem.type = "text";
     textElem.value = experience[elemName];
     textElem.onchange = (e) => {
@@ -13,9 +22,16 @@ function createExperienceTextElement(entry, elemName, experience) {
 }
 
 
-function createExperienceDateElement(entry, elemName, experience) {
+function createExperienceDateElement(entry, elemName, experience, labelText) {
+    const uniqueId = `${elemName}-${elementIdCounter}`;
+
+    const label = document.createElement('label');
+    label.setAttribute('for', uniqueId);
+    label.innerText = labelText;
+    entry.appendChild(label);
+
     const dateElem = document.createElement('input');
-    dateElem.className = "experience-text";
+    dateElem.className = "form-text";
     dateElem.type = "date";
     dateElem.value = experience[elemName];
     dateElem.onchange = (e) => {
@@ -34,16 +50,18 @@ function renderExperiences() {
 
     for (let i=0; i < experiences.length; i++) {
         const entry = document.createElement('li');
-        const position = createExperienceTextElement(entry, "position", experiences[i]);
-        const emp = createExperienceTextElement(entry, "employer", experiences[i]);
-        const desc = createExperienceTextElement(entry, "description", experiences[i]);
-        const start = createExperienceDateElement(entry, "startDate", experiences[i]);
-        const end = createExperienceDateElement(entry, "endDate", experiences[i]);
+        entry.className = "form-section";
+        const position = createExperienceTextElement(entry, "position", experiences[i], "Position Title:");
+        const emp = createExperienceTextElement(entry, "employer", experiences[i], "Employer:");
+        const desc = createExperienceTextElement(entry, "description", experiences[i], "Description:");
+        const start = createExperienceDateElement(entry, "startDate", experiences[i], "Started:");
+        const end = createExperienceDateElement(entry, "endDate", experiences[i], "Ended (leave empty for ongoing):");
         
 
 
         // delete experience button
         const delBtn = document.createElement('button');
+        delBtn.className="button color-delete"
         delBtn.innerText = "Delete Position"
         delBtn.onclick = (e) => {
             if(confirm("Are you sure you want to delete this experience?")) {

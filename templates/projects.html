@@ -2,11 +2,17 @@
 
 {% block title %}User Projects{% endblock %}
 
-{% block body %}
+{% block head %}
+    <!-- Link to the projects.css file -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles/projects.css') }}"> -->
+{% endblock %}
 
-<ul id="projectList">
-</ul>
-<button id="addProjectButton">Add Project</button>
-<button id="saveProjectsButton">Save Projects</button>
+{% block body %}
+<div class="user-form-container">
+    <ul id="projectList" class="user-form"></ul>
+    <button id="addProjectButton" class="button color-add">Add Project</button>
+    <button id="saveProjectsButton" class="button color-save">Save Projects</button>
+</div>
 <script src="{{ url_for('static', filename='scripts/projects.js') }}"></script>
 {% endblock %}
+
