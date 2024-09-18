@@ -148,13 +148,6 @@ def query_user_experience(db, userId):
     return experience
 
 
-@app.route("/")
-def root():
-    return render_template("resume.html")
-
-
-    
-
 
 @app.route("/protected")
 @token_required
@@ -509,6 +502,7 @@ def show_resume(userId):
     return make_response(html)
 
 
+@app.route("/")
 @app.route("/builder")
 @token_required
 def builder(userId):
