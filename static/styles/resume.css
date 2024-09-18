@@ -40,13 +40,14 @@ body {
 
 .resume-name {
     font-size: 4em;
-    line-height: 0.5em;
+    line-height: 1em;
+    margin-top: 0.5em;
     color: black;
 }
 
 .resume-contact {
     margin-top: 0em;
-    line-height: 0.3em;
+    line-height: 1.1em;
     font-style: italic;
     color: #404040;
 }
@@ -54,7 +55,7 @@ body {
 .section-title {
     color: black;
     font-size: 2em;
-    line-height: 0em;
+    line-height: 1em;
 }
 
 .section {
@@ -74,12 +75,12 @@ body {
 
 .resume-list {
     list-style-type: none;
+    margin-left: 1em;
 }
 
 .list-title {
-    margin-top: 2em;
     font-size: 1.5em;
-    line-height: 0.3em;
+    line-height: 1.1em;
 }
 
 .list-text {

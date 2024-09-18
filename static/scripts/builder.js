@@ -9,6 +9,7 @@ window.onload = function() {
 
             data.forEach(project => {
                 const listItem = document.createElement('li');
+                listItem.className = "sidebar-list-item";
                 listItem.setAttribute('draggable', 'true');
                 listItem.dataset.projectTitle = project.title;
 
@@ -17,12 +18,17 @@ window.onload = function() {
                 listItem.addEventListener('drop', handleDrop);
 
                 const checkbox = document.createElement('input');
+                checkbox.id = `checkbox-${project.title}`;
                 checkbox.type = 'checkbox';
                 checkbox.value = project.title;
                 checkbox.onchange = handleProjectSelectionChange;
+
+                const label = document.createElement('label');
+                label.htmlFor = `checkbox-${project.title}`;
+                label.innerHTML = project.title;
                 
                 listItem.appendChild(checkbox);
-                listItem.appendChild(document.createTextNode(project.title));
+                listItem.appendChild(label);
                 
                 fragment.appendChild(listItem);
             });

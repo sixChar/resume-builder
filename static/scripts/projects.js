@@ -143,6 +143,7 @@ window.onload = () => {
             }
 
             saveBtn.onclick = () => {
+                console.log(projects);
                 fetch("/api/set-projects", 
                     {
                         method: "POST",

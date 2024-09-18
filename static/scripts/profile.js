@@ -3,10 +3,11 @@
 window.onload = function() {
     const form = document.getElementById("profile-form");
     const deleteBtn = document.getElementById("delete-profile-btn");
+    const saveBtn = document.getElementById("save-profile-btn");
 
-    form.onsubmit = (e) => {
+    saveBtn.onclick = (e) => {
         e.preventDefault();
-        const fd = new FormData(e.target);
+        const fd = new FormData(form);
 
         fetch("/api/update-profile", {
             method: 'post',
