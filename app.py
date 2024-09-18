@@ -101,7 +101,7 @@ def query_user_projects(db, userId):
             GROUP_CONCAT(ps.skill, ', ') AS skills
         FROM
             projects p
-        JOIN
+        LEFT JOIN
             projSkills ps ON p.userId = ps.userId AND p.title = ps.projTitle
         WHERE
             p.userId=(?)
@@ -116,7 +116,7 @@ def query_user_projects(db, userId):
         "title": title,
         "desc": desc,
         "link": link,
-        "skills": list(skills.split(", "))
+        "skills": list(skills.split(", ")) if skills is not None else []
     } for (_, title, desc, link, skills) in rv]
 
     return projects
@@ -352,7 +352,7 @@ def api_set_projects(userId):
         ON CONFLICT (userId, title) DO UPDATE SET
             userId = excluded.userId,
             description = excluded.description,
-            projLink = excluded.projLink
+            projLink = excluded.projLink;
 
     """
 
@@ -368,19 +368,24 @@ def api_set_projects(userId):
     delete_proj_query = """
         DELETE FROM projects
         WHERE userId = ?
-        AND title NOT IN ({})
+        AND title NOT IN ({});
     """.format(','.join('?' for _ in projects))
 
     db = get_db()
 
     # Insert new projects
     curr = db.executemany(insert_projects_query, values)
-    
-    # Insert new skills
-    curr = db.executemany(insert_skills_query, skills)
 
-    # Delete expired skills
-    curr = db.execute(delete_skills_query, [userId] + flat_skills)
+
+    if len(skills) > 0:
+        # Insert new skills
+        curr = db.executemany(insert_skills_query, skills)
+
+        # Delete expired skills
+        curr = db.execute(delete_skills_query, [userId] + flat_skills)
+    else:
+        # Delete all of this user's skills if there are none in any projects
+        curr = db.execute("DELETE FROM projSkills WHERE userId = ?;", [userId])
 
     # Delete expired projects
     curr = db.execute(delete_proj_query, [userId] + titles)
