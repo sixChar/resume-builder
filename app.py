@@ -60,7 +60,7 @@ def token_required(f):
     def decorated(*args, **kwargs):
         token = request.cookies.get('token')
         if not token:
-            return jsonify({'message': 'token missing'}), 401
+            return redirect(url_for("login"))
         try:
             data = read_user_token(token)
             userId = data['user_id']
@@ -455,51 +455,6 @@ def api_login():
         return resp
     else:
         return {"message": "failed"}, 401
-
-    
-@app.route("/resume")
-@token_required
-def show_resume(userId):
-    db = get_db()
-    (email, name, streetAddr, city, province, postal, phone, github, degree, university, uniLoc, gpa, proficientSkills, familiarSkills) = query_user_profile(db, userId)
-
-    projects = query_user_projects(db, userId)
-
-    experience = query_user_experience(db, userId)
-
-    html = render_template("resume.html", 
-        email=email,
-        name=name,
-        streetAddr=streetAddr,
-        city=city,
-        province=province,
-        postal=postal,
-        phone=phone,
-        github=github,
-        degree=degree,
-        university=university,
-        uniLoc=uniLoc,
-        gpa=gpa,
-        projects=projects,
-        experience=experience,
-        proficientSkills=proficientSkills.splitlines(),
-        familiarSkills=familiarSkills.splitlines(),
-    )
-
-    pdf_options = {
-        'enable-local-file-access':"",
-        'page-size': "A4",
-        'margin-top': '0mm',
-        'margin-right': '0mm',
-        'margin-bottom': '0mm',
-        'margin-left': '0mm',
-        'encoding': "UTF-8",
-    }
-
-    css = "static/styles/resume.css"
-
-    pdf = pdfkit.from_string(html, os.path.abspath("test.pdf"), css=css, options=pdf_options)
-    return make_response(html)
 
 
 @app.route("/")
