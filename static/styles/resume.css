@@ -34,14 +34,13 @@ body {
 
 
 .resume-header {
-    padding-top: 2em;
+    padding-top: 1em;
     border-bottom: 5px black solid;
 }
 
 .resume-name {
-    font-size: 4em;
+    font-size: 3.5em;
     line-height: 1em;
-    margin-top: 0.5em;
     color: black;
 }
 
@@ -54,12 +53,12 @@ body {
 
 .section-title {
     color: black;
-    font-size: 2em;
-    line-height: 1em;
+    font-size: 1.5em;
+    line-height: 0.9em;
 }
 
 .section {
-    margin-top: 4em;
+    margin-top: 1.5em;
 }
 
 .education-degree {
@@ -79,7 +78,7 @@ body {
 }
 
 .list-title {
-    font-size: 1.5em;
+    font-size: 1.3em;
     line-height: 1.1em;
 }
 
@@ -123,11 +122,12 @@ body {
 }
 
 .skills-title {
-    font-size: 1.5em;
+    font-size: 1.3em;
     margin-left: 2em;
 }
 
 .skills-list {
+    margin-top: -0.5em;
     margin-left: 3em;
     display: flex;
     flex-wrap: wrap;
