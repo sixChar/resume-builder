@@ -69,7 +69,7 @@ def token_required(f):
             user = curr.fetchone()
 
             if not user:
-                return jsonify({'message': 'user does not exist!'}), 401
+                return redirect(url_for("login"))
             
         except Exception as e:
             print(e)
@@ -269,7 +269,7 @@ def api_delete_profile(userId):
     curr = db.execute(delete_user, [userId])
     db.commit()
 
-    return {"message": "success"}, 200
+    return redirect(url_for("login"))
 
 
 @app.route("/api/experience")

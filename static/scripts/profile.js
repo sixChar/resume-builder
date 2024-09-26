@@ -21,7 +21,13 @@ window.onload = function() {
             fetch("/api/delete-profile", {
                 method: 'post',
                 body: {},
-            }).then(resp => console.log(resp));
+            }).then(resp => {
+                if (resp.redirected) {
+                    window.location.href = resp.url;
+                } else {
+                    console.log(resp);
+                }
+	    });
         }
         
         
