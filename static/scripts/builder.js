@@ -38,6 +38,8 @@ window.onload = function() {
 
     // Download button event listener
     document.getElementById("downloadResumeButton").addEventListener("click", handleDownloadResume);
+
+    updateResumePreview();
 };
 
 function handleDownloadResume() {
