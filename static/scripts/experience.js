@@ -83,7 +83,7 @@ window.onload = () => {
     const saveBtn = document.getElementById("saveExperienceButton");
 
 
-    fetch("/api/experience")
+    fetch("./api/experience")
         .then(resp=>resp.json())
         .then((data)=>{
             console.log(data);
@@ -95,7 +95,7 @@ window.onload = () => {
             }
 
             saveBtn.onclick = () => {
-                fetch("/api/set-experience", 
+                fetch("./api/set-experience", 
                     {
                         method: "POST",
                         headers: {

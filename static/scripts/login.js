@@ -4,7 +4,7 @@ loginForm.onsubmit = (e) => {
     e.preventDefault();
     const fd = new FormData(e.target);
     
-    fetch("/api/login", {
+    fetch("./api/login", {
         method: "POST",
         body: fd
     })

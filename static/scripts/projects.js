@@ -131,7 +131,7 @@ window.onload = () => {
     const saveBtn = document.getElementById("saveProjectsButton");
 
 
-    fetch("/api/projects")
+    fetch("./api/projects")
         .then(resp=>resp.json())
         .then((data)=>{
             console.log(data);
@@ -143,7 +143,7 @@ window.onload = () => {
             }
 
             saveBtn.onclick = () => {
-                fetch("/api/set-projects", 
+                fetch("./api/set-projects", 
                     {
                         method: "POST",
                         headers: {

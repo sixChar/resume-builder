@@ -1,5 +1,5 @@
 window.onload = function() {
-    fetch("/api/projects")
+    fetch("./api/projects")
         .then(resp => resp.json())
         .then(data => {
             const projectSidebarList = document.getElementById("projectSidebarList");
@@ -50,7 +50,7 @@ function handleDownloadResume() {
                                 .map(li => li.dataset.projectTitle)
                                 .filter(title => selectedProjects.includes(title));
 
-    fetch("/download-resume", {
+    fetch("./download-resume", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ selected_projects: orderedProjects })
@@ -115,7 +115,7 @@ function updateResumePreview() {
                                 .map(li => li.dataset.projectTitle)
                                 .filter(title => selectedProjects.includes(title));
 
-    fetch("/api/filtered-resume", {
+    fetch("./api/filtered-resume", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ selected_projects: orderedProjects })

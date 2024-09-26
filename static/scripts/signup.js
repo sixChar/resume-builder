@@ -4,7 +4,7 @@ signupForm.onsubmit = (e) => {
     e.preventDefault();
     const fd = new FormData(e.target);
     
-    fetch("/api/signup", {
+    fetch("./api/signup", {
         method: "POST",
         body: fd
     })
