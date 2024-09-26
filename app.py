@@ -269,7 +269,9 @@ def api_delete_profile(userId):
     curr = db.execute(delete_user, [userId])
     db.commit()
 
-    return redirect(url_for("login"))
+    resp = make_response({"redirect": url_for("profile")})
+    resp.set_cookie('token', '', expires=0, httponly=True)
+    return resp
 
 
 @app.route("/api/experience")
@@ -426,6 +428,12 @@ def api_signup():
 @app.route("/login")
 def login():
     return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+    resp = make_response(redirect(url_for("login")))
+    resp.set_cookie('token', '', httponly=True, expires=0)
+    return resp
 
 
 @app.route("/api/login", methods=["POST"])
