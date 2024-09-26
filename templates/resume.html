@@ -13,18 +13,18 @@
     <!-- Header -->
         <div id="header" class="resume-header">
             <div class="resume-contact">
-                <p>{{ streetAddr }}</p>
-                <p>{{ city }}, {{ province }}  {{ postal }}</p>
-                <p>{{ email }}</p>
-                <p>{{ phone }}</p>
+                <p>{{ streetAddr | default("None") }}</p>
+                <p>{{ city | default("None") }}, {{ province | default("None") }}  {{ postal | default("None") }}</p>
+                <p>{{ email | default("None") }}</p>
+                <p>{{ phone | default("None") }}</p>
             </div>
-            <h1 class="resume-name">{{ name }}</h1>
+            <h1 class="resume-name">{{ name | default("None") }}</h1>
         </div>
 
         <!-- Github -->
         <div class="section">
             <h2 class="section-title">Github</h2>
-            <a class="resume-github" href="{{ github }}" target="_blank" rel="noopener noreferrer">{{ github }}</a>
+            <a class="resume-github" href="{{ github | default("None") }}" target="_blank" rel="noopener noreferrer">{{ github }}</a>
         </div>
 
         
@@ -52,8 +52,8 @@
         <!-- Education -->
         <div class="section">
             <h2 class="section-title">Education</h2>
-            <p class="education-degree">{{ degree }}, GPA: {{ gpa }}</p>
-            <p class="education-location">{{university}}, {{ uniLoc }}</p>
+            <p class="education-degree">{{ degree | default("None") }}, GPA: {{ gpa | default("None") }}</p>
+            <p class="education-location">{{ university | default("None") }}, {{ uniLoc | default("None") }}</p>
         </div>
 
         <!-- Projects -->

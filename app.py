@@ -259,7 +259,7 @@ def api_delete_profile(userId):
     """
 
     delete_user = """
-        DELETE FROM users WHERE userId=?
+        DELETE FROM users WHERE userId=(?)
     """
 
     db = get_db()
@@ -269,7 +269,7 @@ def api_delete_profile(userId):
     curr = db.execute(delete_user, [userId])
     db.commit()
 
-    resp = make_response({"redirect": url_for("profile")})
+    resp = make_response({"redirect": url_for("login")})
     resp.set_cookie('token', '', expires=0, httponly=True)
     return resp
 
@@ -477,6 +477,10 @@ def filtered_resume(userId):
     selected_projects = request.json.get('selected_projects', [])
     db = get_db()
     (email, name, streetAddr, city, province, postal, phone, github, degree, university, uniLoc, gpa, proficientSkills, familiarSkills) = query_user_profile(db, userId)
+    if proficientSkills is None:
+        proficientSkills = ""
+    if familiarSkills is None:
+        familiarSkills = ""
 
     all_projects = {proj['title']: proj for proj in query_user_projects(db, userId)}
 
@@ -518,6 +522,10 @@ def download_resume(userId):
     experience = query_user_experience(db, userId)
     profile_data = query_user_profile(db, userId)
     (email, name, streetAddr, city, province, postal, phone, github, degree, university, uniLoc, gpa, proficientSkills, familiarSkills) = profile_data
+    if proficientSkills is None:
+        proficientSkills = ""
+    if familiarSkills is None:
+        familiarSkills = ""
 
     html = render_template("resume.html", 
         email=email,
